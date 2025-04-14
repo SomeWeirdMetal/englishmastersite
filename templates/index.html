@@ -1,0 +1,90 @@
+{% extends "base_page.html" %}
+
+{% block title %}Главная - English Master{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+    /* Стили специфичные для главной страницы */
+    .description {
+        background-color: white;
+        padding: 2.5rem;
+        margin: 2rem auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        text-align: center;
+    }
+
+    .description h2 {
+        color: #00796b;
+        margin-bottom: 1rem;
+        font-size: 1.8rem;
+    }
+
+    .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin: 3rem 0;
+    }
+
+    .feature-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        color: #0097a7;
+    }
+
+    .btn {
+        display: inline-block;
+        background: linear-gradient(135deg, #00796b, #0097a7);
+        color: white;
+        padding: 0.8rem 1.8rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="description">
+    <h2>Добро пожаловать в наш тренажер по английскому языку!</h2>
+    <p>English Master предлагает интерактивные упражнения для изучения и практики английского языка.</p>
+</section>
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📖</div>
+                <h3>Грамматика</h3>
+                <p>Изучайте правила английской грамматики и выполняйте практические упражнения для закрепления знаний.</p>
+                <a href="/grammar" class="btn">Начать</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Словарный запас</h3>
+                <p>Расширяйте свой словарный запас, находя нужные слова в нашей базе, а также по желанию добавляйте новые.</p>
+                <a href="/vocabulary" class="btn">Начать</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Оставьте отзыв</h3>
+                <p>Поделитесь своим опытом работы с платформой с другими пользователями и помогите нам сделать её лучше!</p>
+                <a href="/feedback" class="btn">Написать</a>
+            </div>
+        </section>
+{% endblock %}

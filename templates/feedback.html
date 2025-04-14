@@ -1,0 +1,122 @@
+{% extends "base_page.html" %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+    /* Стили для формы */
+    .feedback-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #00796b;
+        font-weight: 600;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #80cbc4;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    /* Стили для карточек отзывов */
+    .feedback-grid {
+        display: grid;
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .feedback-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-left: 4px solid #0097a7;
+    }
+
+    .feedback-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        align-items: center;
+    }
+
+    .user-name {
+        color: #00796b;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    .feedback-date {
+        color: #78909c;
+        font-size: 0.9rem;
+    }
+
+    .feedback-text {
+        color: #455a64;
+        line-height: 1.6;
+        white-space: pre-line;
+    }
+
+    .btn {
+        background: #00796b;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background 0.3s;
+    }
+
+    .btn:hover {
+        background: #00695c;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="feedback-section">
+    <h1 style="text-align: center; margin-bottom: 2rem; color: #00796b;">✍️ Отзывы наших учеников</h1>
+
+    <form method="post" class="feedback-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Ваше имя:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="text">Ваш отзыв:</label>
+            <textarea id="text" name="text" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn">Отправить отзыв</button>
+    </form>
+
+    <div class="feedback-grid">
+        {% for feedback in feedbacks %}
+        <div class="feedback-card">
+            <div class="feedback-header">
+                <div class="user-name">{{ feedback.name }}</div>
+                <div class="feedback-date">{{ feedback.date|date:"d.m.Y H:i" }}</div>
+            </div>
+            <p class="feedback-text">{{ feedback.text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends "base_page.html" %}
+
+{% block title %}Результаты | English Master{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+    .result-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    
+    .result-header {
+        color: {% if score >= 70 %}#2e7d32{% else %}#c62828{% endif %};
+        padding-bottom: 1rem;
+        border-bottom: 2px solid {% if score >= 70 %}#81c784{% else %}#ef9a9a{% endif %};
+        margin-bottom: 1.5rem;
+    }
+    
+    .score-display {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+    
+    .exercise-result {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        border-radius: 8px;
+        background: #f5f5f5;
+    }
+    
+    .correct-answer {
+        color: #2e7d32;
+        font-weight: bold;
+    }
+    
+    .incorrect-answer {
+        color: #c62828;
+        text-decoration: line-through;
+    }
+    
+    .action-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .action-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.8rem 1.5rem;
+        background: #00796b;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+
+    .action-link:hover {
+        background: #00695c;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    <h1 class="result-header">
+        {% if score >= 70 %}
+        Отличный результат!
+        {% else %}
+        Есть над чем поработать
+        {% endif %}
+    </h1>
+
+    <div class="score-display">
+        Ваш результат: {{ correct }} из {{ total }} ({{ score }}%)
+    </div>
+
+    <h3>Детализация:</h3>
+    {% for result in results %}
+    <div class="exercise-result">
+        <p><strong>Задание {{ result.id }}:</strong> {{ result.sentence|safe }}</p>
+        <p>Ваш ответ:
+            <span class="{% if result.is_correct %}correct-answer{% else %}incorrect-answer{% endif %}">
+                {{ result.user_answer|default:"Нет ответа" }}
+            </span>
+        </p>
+        {% if not result.is_correct %}
+        <p class="correct-answer">Правильный ответ: {{ result.answer }}</p>
+        {% endif %}
+    </div>
+    {% endfor %}
+    
+    <div class="action-links">
+        <a href="/grammar" class="action-link">Пройти тест ещё раз</a>
+        <a href="/" class="action-link">На главную</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends "base_page.html" %}
+
+{% block title %}Грамматика | English Master{% endblock %}
+
+{% block styles %}
+{{ block.super }}
+<style>
+    .grammar-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+    }
+
+    .instruction {
+        font-size: 1.2rem;
+        color: #00796b;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .exercise-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-bottom: 1.5rem;
+        border-left: 4px solid #0097a7;
+    }
+
+    .exercise-number {
+        font-weight: bold;
+        color: #00796b;
+        margin-bottom: 0.5rem;
+    }
+
+    .exercise-sentence {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .answer-input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid #80cbc4;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 200px;
+        margin: 2rem auto 0;
+        padding: 1rem;
+        background: #00796b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: #00695c;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="grammar-container">
+    <h1>Упражнения по грамматике</h1>
+
+    <p class="instruction">Вставьте пропущенные слова:</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for exercise in exercises %}
+        <div class="exercise-card">
+            <div class="exercise-number">Задание {{ exercise.id }}</div>
+            <div class="exercise-sentence">{{ exercise.sentence|safe }}</div>
+            <input type="text"
+                   class="answer-input"
+                   name="answer_{{ exercise.id }}"
+                   placeholder="Введите пропущенное слово"
+                   required>
+        </div>
+        {% endfor %}
+
+        <button type="submit" class="submit-btn">Проверить!</button>
+    </form>
+</div>
+{% endblock %}
